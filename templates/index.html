@@ -1,0 +1,29 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Frontend</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }  /* Simple CSS [[4]] */
+        #output { margin-top: 20px; color: green; }
+    </style>
+</head>
+<body>
+    <h1>Flask + HTML Form</h1>
+    <form action="/submit" method="POST">  <!-- Form posts to Flask backend [[3]] -->
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+        // Fetch data from Flask API using JavaScript [[5]]
+        fetch('/api/data')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = data.message;
+            });
+    </script>
+</body>
+</html>

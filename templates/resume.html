@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Resume Builder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --light-gray: #c5c7ca;
+            --slate-blue: #2c3e50;
+            --teal-blue: #0e6b8c;
+            --aqua-mint: #4effec;
+            --mint-green: #b1fcb1;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--slate-blue);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .upload-container {
+            max-width: 950px; /* Increased max-width for a bit more spacious look */
+            margin: 3rem auto; /* Increased top/bottom margin */
+            background-color: #ffffff;
+            border-radius: 12px; /* Slightly more rounded corners */
+            box-shadow: 0 8px 20px rgba(14, 107, 140, 0.15); /* Softer, more pronounced shadow */
+            padding: 3rem; /* Increased padding */
+        }
+
+        .page-title {
+            color: var(--slate-blue);
+            margin-bottom: 2rem; /* Increased margin */
+            font-weight: 700; /* Stronger font weight */
+            border-bottom: 4px solid var(--teal-blue); /* Thicker border */
+            padding-bottom: 12px; /* Increased padding */
+            text-align: center; /* Center the title */
+        }
+
+        .section-title {
+            background-color: var(--teal-blue);
+            color: white;
+            padding: 10px 20px; /* Increased padding */
+            border-radius: 8px; /* More rounded */
+            margin-bottom: 20px; /* Increased margin */
+            font-size: 1.3rem; /* Slightly larger font */
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 12px; /* Increased margin */
+            font-size: 1.1rem; /* Slightly larger icon */
+        }
+
+        .form-label {
+            font-weight: 600; /* Stronger font weight */
+            color: var(--slate-blue);
+            margin-bottom: 0.5rem; /* Added some bottom margin */
+            display: block; /* Ensures label takes full width */
+        }
+
+        .form-control {
+            border: 1px solid var(--light-gray);
+            border-radius: 6px; /* Slightly more rounded */
+            padding: 12px 18px; /* Increased padding */
+            transition: all 0.3s ease;
+            font-size: 1rem; /* Slightly larger font */
+        }
+
+        .form-control:focus {
+            border-color: var(--aqua-mint);
+            box-shadow: 0 0 0 0.2rem rgba(78, 255, 236, 0.25);
+        }
+
+        textarea.form-control {
+            min-height: 120px; /* Slightly taller textarea */
+        }
+
+        .btn-primary {
+            background-color: var(--teal-blue);
+            border-color: var(--teal-blue);
+            padding: 12px 24px; /* Increased padding */
+            font-weight: 600; /* Stronger font weight */
+            transition: all 0.3s ease;
+            border-radius: 8px; /* More rounded */
+        }
+
+        .btn-primary:hover {
+            background-color: var(--slate-blue);
+            border-color: var(--slate-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added subtle shadow on hover */
+        }
+
+        .btn-secondary {
+            background-color: var(--light-gray);
+            border-color: var(--light-gray);
+            color: var(--slate-blue);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #a8aaad;
+            border-color: #a8aaad;
+        }
+
+        .btn-outline-info {
+            color: var(--teal-blue);
+            border-color: var(--teal-blue);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-info:hover {
+            background-color: var(--teal-blue);
+            color: white;
+        }
+
+        .btn-link {
+            color: var(--teal-blue);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-link:hover {
+            color: var(--slate-blue);
+            text-decoration: underline;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--light-gray);
+            padding: 3rem; /* Increased padding */
+            text-align: center;
+            border-radius: 8px; /* More rounded */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(197, 199, 202, 0.1);
+        }
+
+        .file-upload:hover {
+            border-color: var(--aqua-mint);
+            background-color: rgba(78, 255, 236, 0.05);
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            display: block;
+            color: var(--slate-blue);
+            font-size: 1.1rem; /* Slightly larger font */
+            margin-bottom: 12px; /* Increased margin */
+        }
+
+        .upload-icon {
+            font-size: 3rem; /* Larger icon */
+            color: var(--teal-blue);
+            margin-bottom: 20px; /* Increased margin */
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(78, 255, 236, 0.1);
+            color: var(--teal-blue);
+        }
+
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(14, 107, 140, 0.25);
+        }
+
+        .add-more-btn {
+            background-color: rgba(177, 252, 177, 0.3);
+            color: var(--slate-blue);
+            border: 1px dashed var(--mint-green);
+            margin-top: 15px; /* Increased margin */
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            display: block; /* Make it full width */
+            width: 100%;
+            text-align: center;
+        }
+
+        .add-more-btn:hover {
+            background-color: var(--mint-green);
+            color: var(--slate-blue);
+        }
+
+        .remove-item-btn {
+            color: #dc3545;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .remove-item-btn:hover {
+            color: #bd2130;
+            transform: scale(1.1);
+        }
+
+        .dynamic-field-container {
+            background-color: rgba(197, 199, 202, 0.1);
+            border-radius: 8px;
+            padding: 20px; /* Increased padding */
+            margin-bottom: 20px; /* Increased margin */
+            position: relative;
+            border-left: 4px solid var(--teal-blue); /* Thicker border */
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--teal-blue);
+            color: white;
+        }
+
+        .nav-pills .nav-link {
+            color: var(--slate-blue);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 5px;
+        }
+
+        .tab-content {
+            padding-top: 25px; /* Increased padding */
+        }
+
+        .progress-container {
+            margin: 25px 0; /* Increased margin */
+        }
+
+        .progress {
+            height: 12px; /* Slightly thicker progress bar */
+            border-radius: 6px; /* More rounded */
+            background-color: rgba(197, 199, 202, 0.5); /* Lighter background */
+        }
+
+        .progress-bar {
+            background-color: var(--teal-blue);
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 35px; /* Increased margin */
+            align-items: center; /* Vertically align steps and lines */
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            width: 35px; /* Slightly larger step circles */
+            height: 35px; /* Slightly larger step circles */
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem; /* Slightly larger step number */
+            z-index: 2; /* Ensure step is above the line */
+        }
+
+        .step.active {
+            background-color: var(--teal-blue);
+        }
+
+        .step.completed {
+            background-color: var(--mint-green);
+            color: var(--slate-blue);
+        }
+
+        .step-line {
+            flex-grow: 1;
+            height: 4px; /* Slightly thicker line */
+            background-color: var(--light-gray);
+            margin: 0 10px; /* Adjust margin for better spacing */
+            z-index: 1; /* Ensure line is behind the step */
+        }
+
+        .step-line.completed {
+            background-color: var(--mint-green);
+        }
+
+        .form-floating > .form-control {
+            height: calc(3.5rem + 2px);
+            padding: 1rem 0.75rem;
+        }
+
+        .form-floating > label {
+            padding: 1rem 0.75rem;
+        }
+
+        .tooltip-icon {
+            margin-left: 8px; /* Increased margin */
+            color: var(--teal-blue);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .badge-skill {
+            background-color: rgba(14, 107, 140, 0.1);
+            color: var(--teal-blue);
+            margin: 3px; /* Increased margin */
+            padding: 6px 12px; /* Increased padding */
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        /* Footer styling */
+        .footer {
+            background-color: var(--slate-blue);
+            color: var(--light-gray);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem; /* Add some space above the footer */
+        }
+
+        .footer a {
+            color: var(--aqua-mint);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--mint-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="upload-container">
+            <h2 class="page-title"><i class="fas fa-file-alt me-2"></i>Engineering Resume Builder</h2>
+
+            <div class="progress-container">
+                <div class="step-indicator">
+                    <div class="step active" id="step1">1</div>
+                    <div class="step-line" id="line1"></div>
+                    <div class="step" id="step2">2</div>
+                    <div class="step-line" id="line2"></div>
+                    <div class="step" id="step3">3</div>
+                    <div class="step-line" id="line3"></div>
+                    <div class="step" id="step4">4</div>
+                    <div class="step-line" id="line4"></div>
+                    <div class="step" id="step5">5</div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <small class="text-muted">Start</small>
+                    <small class="text-muted">Complete</small>
+                </div>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" id="resumeForm">
+                <input type="hidden" name="csrf_token" value="your_csrf_token_here">
+
+                <div class="form-sections">
+                    <div class="form-section" id="section1">
+                        <h3 class="section-title"><i class="fas fa-user me-2"></i>Personal Information</h3>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Full Name" required>
+                                    <label for="full_name">Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required>
+                                    <label for="email">Email Address</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Contact Number" required>
+                                    <label for="phone">Contact Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="url" class="form-control" id="linkedin" name="linkedin" placeholder="LinkedIn Profile URL">
+                                    <label for="linkedin">LinkedIn Profile URL</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="url" class="form-control" id="github" name="github" placeholder="GitHub / Portfolio URL">
+                                    <label for="github">GitHub / Portfolio URL</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="City, State, Country">
+                                    <label for="address ">City, State, Country</label>
+                                    name="project_description[]" rows="3" placeholder="Briefly describe the project, your role, and key achievements"></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Technologies Used</label>
+                                    <input type="text" class="form-control skill-input" name="project_technologies[]" placeholder="e.g., Python, Arduino, SolidWorks (comma separated)">
+                                    <div class="skill-tags mt-2"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Project Link (Optional)</label>
+                                    <input type="url" class="form-control" name="project_link[]" placeholder="URL to GitHub repository or live demo">
+                                </div>
+
+                                <div class="text-end">
+                                    <a href="javascript:void(0)" class="remove-item-btn" style="display: none;"><i class="fas fa-trash-alt"></i> Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn add-more-btn w-100" id="add-project">
+                            <i class="fas fa-plus-circle me-2"></i>Add Another Project
+                        </button>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-info prev-section"><i class="fas fa-arrow-left me-2"></i> Previous</button>
+                            <button type="button" class="btn btn-primary next-section">Next: Experience <i class="fas fa-arrow-right ms-2"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="form-section d-none" id="section4">
+                        <h3 class="section-title"><i class="fas fa-briefcase me-2"></i>Professional Experience</h3>
+
+                        <div id="experience-container">
+                            <div class="dynamic-field-container experience-entry">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Job Title</label>
+                                        <input type="text" class="form-control" name="exp_title[]" placeholder="Job Title">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Company Name</label>
+                                        <input type="text" class="form-control" name="exp_company[]" placeholder="Company Name">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Location</label>
+                                        <input type="text" class="form-control" name="exp_location[]" placeholder="City, State">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Duration</label>
+                                        <div class="input-group">
+                                            <input type="month" class="form-control" name="exp_start_date[]">
+                                            <span class="input-group-text">to</span>
+                                            <input type="month" class="form-control" name="exp_end_date[]">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Job Description & Responsibilities</label>
+                                    <textarea class="form-control" name="exp_description[]" rows="3" placeholder="Describe your responsibilities and achievements using bullet points"></textarea>
+                                    <small class="text-muted">Use action verbs and highlight quantifiable achievements whenever possible.</small>
+                                </div>
+
+                                <div class="text-end">
+                                    <a href="javascript:void(0)" class="remove-item-btn" style="display: none;"><i class="fas fa-trash-alt"></i> Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn add-more-btn w-100" id="add-experience">
+                            <i class="fas fa-plus-circle me-2"></i>Add Another Experience
+                        </button>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-info prev-section"><i class="fas fa-arrow-left me-2"></i> Previous</button>
+                            <button type="button" class="btn btn-primary next-section">Next: Upload & Review <i class="fas fa-arrow-right ms-2"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="form-section d-none" id="section5">
+                        <h3 class="section-title"><i class="fas fa-upload me-2"></i>Upload Existing Resume (Optional) & Review</h3>
+
+                        <div class="mb-3">
+                            <div class="file-upload">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <label for="resume_upload" class="file-label">Click to upload your existing resume (PDF or DOCX)</label>
+                                <input type="file" id="resume_upload" name="resume_upload" accept=".pdf,.docx">
+                            </div>
+                            <small class="text-muted">Uploading a resume will attempt to pre-fill some fields. Review all information carefully.</small>
+                        </div>
+
+                        <h3 class="section-title mt-4"><i class="fas fa-check-circle me-2"></i>Review and Submit</h3>
+                        <p>Please review all the information you have entered. Once you are satisfied, you can submit the form to generate your engineering resume.</p>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-secondary prev-section"><i class="fas fa-arrow-left me-2"></i> Previous</button>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-file-pdf me-2"></i>Generate Resume</button>
+                            <small class="text-muted">By submitting, you agree to our terms and privacy policy.</small>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Engineering Resume Builder | Designed with <i class="fas fa-heart" style="color: var(--aqua-mint);"></i> in Bengaluru</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const formSections = document.querySelectorAll('.form-section');
+        const nextButtons = document.querySelectorAll('.next-section');
+        const prevButtons = document.querySelectorAll('.prev-section');
+        const progress = document.querySelector('.progress-bar');
+        const steps = document.querySelectorAll('.step-indicator .step');
+        const stepLines = document.querySelectorAll('.step-indicator .step-line');
+
+        let currentSection = 0;
+
+        function updateProgress() {
+            const percentage = ((currentSection + 1) / formSections.length) * 100;
+            progress.style.width = `${percentage}%`;
+
+            steps.forEach((step, index) => {
+                if (index === currentSection) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else if (index < currentSection) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+
+            stepLines.forEach((line, index) => {
+                if (index < currentSection) {
+                    line.classList.add('completed');
+                } else {
+                    line.classList.remove('completed');
+                }
+            });
+        }
+
+        function showSection(index) {
+            formSections.forEach((section, i) => {
+                section.classList.add('d-none');
+                if (i === index) {
+                    section.classList.remove('d-none');
+                }
+            });
+            updateProgress();
+        }
+
+        nextButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (currentSection < formSections.length - 1) {
+                    currentSection++;
+                    showSection(currentSection);
+                }
+            });
+        });
+
+        prevButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (currentSection > 0) {
+                    currentSection--;
+                    showSection(currentSection);
+                }
+            });
+        });
+
+        // Dynamic Education Fields
+        document.getElementById('add-education').addEventListener('click', function() {
+            const container = document.getElementById('education-container');
+            const newEntry = container.firstElementChild.cloneNode(true);
+            newEntry.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+            const removeButton = newEntry.querySelector('.remove-item-btn');
+            removeButton.style.display = 'inline-block';
+            container.appendChild(newEntry);
+        });
+
+        document.getElementById('education-container').addEventListener('click', function(event) {
+            if (event.target.classList.contains('fa-trash-alt')) {
+                event.target.closest('.dynamic-field-container').remove();
+                // If only one remains, hide the remove button
+                const entries = document.querySelectorAll('#education-container .dynamic-field-container');
+                if (entries.length === 1) {
+                    entries[0].querySelector('.remove-item-btn').style.display = 'none';
+                }
+            }
+        });
+
+        // Dynamic Certification Fields
+        document.getElementById('add-certification').addEventListener('click', function() {
+            const container = document.getElementById('certification-container');
+            const newEntry = container.firstElementChild.cloneNode(true);
+            newEntry.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+            const removeButton = newEntry.querySelector('.remove-item-btn');
+            removeButton.style.display = 'inline-block';
+            container.appendChild(newEntry);
+        });
+
+        document.getElementById('certification-container').addEventListener('click', function(event) {
+            if (event.target.classList.contains('fa-trash-alt')) {
+                event.target.closest('.dynamic-field-container').remove();
+                const entries = document.querySelectorAll('#certification-container .dynamic-field-container');
+                if (entries.length === 1) {
+                    entries[0].querySelector('.remove-item-btn').style.display = 'none';
+                }
+            }
+        });
+
+        // Dynamic Project Fields
+        document.getElementById('add-project').addEventListener('click', function() {
+            const container = document.getElementById('project-container');
+            const newEntry = container.firstElementChild.cloneNode(true);
+            newEntry.querySelectorAll('input, textarea').forEach(input => {
+                input.value = '';
+            });
+            newEntry.querySelectorAll('.skill-tags').forEach(tagContainer => {
+                tagContainer.innerHTML = '';
+            });
+            const removeButton = newEntry.querySelector('.remove-item-btn');
+            removeButton.style.display = 'inline-block';
+            container.appendChild(newEntry);
+
+            // Re-initialize skill input for the new entry
+            const skillInputs = newEntry.querySelectorAll('.skill-input');
+            skillInputs.forEach(input => initializeSkillInput(input));
+        });
+
+        document.getElementById('project-container').addEventListener('click', function(event) {
+            if (event.target.classList.contains('fa-trash-alt')) {
+                event.target.closest('.dynamic-field-container').remove();
+                const entries = document.querySelectorAll('#project-container .dynamic-field-container');
+                if (entries.length === 1) {
+                    entries[0].querySelector('.remove-item-btn').style.display = 'none';
+                }
+            }
+        });
+
+        // Dynamic Experience Fields
+        document.getElementById('add-experience').addEventListener('click', function() {
+            const container = document.getElementById('experience-container');
+            const newEntry = container.firstElementChild.cloneNode(true);
+            newEntry.querySelectorAll('input, textarea').forEach(input => {
+                input.value = '';
+            });
+            const removeButton = newEntry.querySelector('.remove-item-btn');
+            removeButton.style.display = 'inline-block';
+            container.appendChild(newEntry);
+        });
+
+        document.getElementById('experience-container').addEventListener('click', function(event) {
+            if (event.target.classList.contains('fa-trash-alt')) {
+                event.target.closest('.dynamic-field-container').remove();
+                const entries = document.querySelectorAll('#experience-container .dynamic-field-container');
+                if (entries.length === 1) {
+                    entries[0].querySelector('.remove-item-btn').style.display = 'none';
+                }
+            }
+        });
+
+        // Skill Input Handling
+        const skillInputs = document.querySelectorAll('.skill-input');
+        skillInputs.forEach(input => {
+            initializeSkillInput(input);
+        });
+
+        function initializeSkillInput(inputElement) {
+            const tagContainer = inputElement.nextElementSibling;
+            const inputId = inputElement.id;
+
+            inputElement.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' || event.key === ',') {
+                    event.preventDefault();
+                    const skill = inputElement.value.trim();
+                    if (skill && !Array.from(tagContainer.children).some(tag => tag.textContent.trim() === skill)) {
+                        const tag = document.createElement('span');
+                        tag.classList.add('badge', 'badge-skill');
+                        tag.textContent = skill;
+                        const removeIcon = document.createElement('i');
+                        removeIcon.classList.add('fas', 'fa-times', 'ms-2');
+                        removeIcon.style.cursor = 'pointer';
+                        removeIcon.addEventListener('click', function() {
+                            tag.remove();
+                        });
+                        tag.appendChild(removeIcon);
+                        tagContainer.appendChild(tag);
+                        inputElement.value = '';
+                    }
+                }
+            });
+        }
+
+        showSection(currentSection);
+    </script>
+</body>
+</html>

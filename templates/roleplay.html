@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Role - TalentSleuth AI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 60px 0;
+        }
+        
+        .role-selection-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .role-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .role-header h1 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .role-header p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .role-cards {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .role-card {
+            flex: 1;
+            max-width: 450px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .role-card-header {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .role-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #2ecc71, #16a085);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            transition: transform 0.3s;
+        }
+        
+        .role-card:hover .role-icon {
+            transform: scale(1.1);
+        }
+        
+        .role-icon i {
+            font-size: 40px;
+            color: white;
+        }
+        
+        .manager-icon {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        .role-card h2 {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+        
+        .role-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .role-features {
+            padding: 0 30px 30px;
+        }
+        
+        .role-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .role-feature i {
+            color: var(--primary);
+            font-size: 16px;
+        }
+        
+        .manager-feature i {
+            color: #3498db;
+        }
+        
+        .role-cta {
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+        }
+        
+        .role-btn {
+            padding: 14px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .btn-employee {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-employee:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-manager {
+            background-color: #3498db;
+            color: white;
+            border: none;
+        }
+        
+        .btn-manager:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s;
+            opacity: 0.8;
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            opacity: 1;
+        }
+        
+        .footer-copy {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .role-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .role-card {
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-search"></i> TalentSleuth AI
+                </a>
+                <div class="nav-links">
+                    <a href="index.html#features">Features</a>
+                    <a href="index.html#how-it-works">How It Works</a>
+                    <a href="index.html#testimonials">Success Stories</a>
+                    <a href="index.html#faq">FAQ</a>
+                </div>
+                <a href="#" class="btn btn-outline">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="role-selection-container">
+                <div class="role-header">
+                    <h1>Choose Your Role</h1>
+                    <p>Select the role that best describes what you want to do on TalentSleuth AI. You can always switch roles later from your account settings.</p>
+                </div>
+                
+                <div class="role-cards">
+                    <!-- Employee Role Card -->
+                    <a href="employee-dashboard.html" class="role-card">
+                        <div class="role-card-header">
+                            <div class="role-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <h2>I'm a Job Seeker</h2>
+                            <p>Find your next opportunity and connect with top companies looking for your skills</p>
+                        </div>
+                        <div class="role-features">
+                            <div class="role-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Create a professional profile</span>
+                            </div>
+                            <div class="role-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Showcase your skills & experience</span>
+                            </div>
+                            <div class="role-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Get matched with relevant job opportunities</span>
+                            </div>
+                            <div class="role-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Connect directly with hiring managers</span>
+                            </div>
+                        </div>
+                        <div class="role-cta">
+                        <button class="role-btn btn-employee">Continue as Job Seeker</button> 
+
+                        </div>
+                    </a>
+                    
+                    <!-- Manager Role Card -->
+                    <a href="{{ url_for('HR') }}" class="role-card">
+                        <div class="role-card-header">
+                            <div class="role-icon manager-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h2>I'm a Hiring Manager</h2>
+                            <p>Find talented developers and build your team with our intelligent matching platform</p>
+                        </div>
+                        <div class="role-features">
+                            <div class="role-feature manager-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Create a company profile</span>
+                            </div>
+                            <div class="role-feature manager-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Post open positions & requirements</span>
+                            </div>
+                            <div class="role-feature manager-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Browse pre-matched talent pool</span>
+                            </div>
+                            <div class="role-feature manager-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Connect with top candidates directly</span>
+                            </div>
+                        </div>
+                       <div>
+                           <button type="button" class="role-btn btn-manager">Continue as Hiring Manager</button>
+                      </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="terms.html">Terms of Service</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="contact.html">Contact Us</a>
+                    <a href="help.html">Help Center</a>
+                </div>
+                <div class="footer-copy">
+                    &copy; 2025 TalentSleuth AI. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
